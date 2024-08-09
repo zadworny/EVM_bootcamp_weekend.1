@@ -10,21 +10,33 @@ This is a group activity for at least 3 students. The objective is to interact w
 ### Steps
 
 1. **Compiled the smart contract and deployed it**
+
 2. **Constructor called on HelloWorld.sol deployment:**
    - The constructor initializes the state variable `text` to “Hello World” and assigns the `owner` variable to the deployer.
    ![Project Screenshot](./images/1.png)
+
 3. **Calling `HelloWorld.initialText()`**
+   ![Project Screenshot](./images/2.png)
+
 4. **Calling `HelloWorld.setText()` function:**
    - Checking if the text was changed using the `helloWorld()`.
+   ![Project Screenshot](./images/3.png)
+   ![Project Screenshot](./images/4.png)
+
 5. **Calling `transferOwnership()`**
    - Contract ownership transferred to a new address. Verified by checking the `owner` public variable.
+   ![Project Screenshot](./images/5.png)
+
 6. **Adding `onlyOwner` modifier to `setText()` function**
+   ![Project Screenshot](./images/6.png)
+
 7. **Add `onlyOwner` modifier to `setText()` function and test behavior:**
    - Called `setText()` function as the owner/deployer and changed text - **WORKED**
    - Checked if the text changed using `helloWorld()` function - **WORKED**
    - Changed ownership using `transferOwnership()` function - **WORKED**
    - Checked if the ownership changed using `owner` state variable - **WORKED**
    - Called `setText()` function and tried to change the text - **ERROR!** (Ownership was transferred to a different address)
+   ![Project Screenshot](./images/7.png)
 
 ### Smart Contract Code (HelloWorld.sol)
 
