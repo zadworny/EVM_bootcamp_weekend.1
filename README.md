@@ -12,6 +12,7 @@ This is a group activity for at least 3 students. The objective is to interact w
 1. **Compiled the smart contract and deployed it**
 2. **Constructor called on HelloWorld.sol deployment:**
    - The constructor initializes the state variable `text` to “Hello World” and assigns the `owner` variable to the deployer.
+   ![Project Screenshot](./images/1.png)
 3. **Calling `HelloWorld.initialText()`**
 4. **Calling `HelloWorld.setText()` function:**
    - Checking if the text was changed using the `helloWorld()`.
