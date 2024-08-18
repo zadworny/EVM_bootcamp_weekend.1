@@ -1,103 +1,102 @@
-# Week 1 - Group Project Submission
+# Week 2 - Project
 
-## Assignment Tasks - Week 1 - Group No. 5
+## INDEX
+- [Assignment Tasks - Week2 - Group No. 5](#assignment-tasks---week-2---group-no-5)
+- [Date of Submission](#date-of-submission)
+- [GitHub Link](#github-link)
+- [Tasks](#tasks)
+  - [Successfully Deploying the Contract Ballot.sol with 2 Proposals](#successfully-deploying-the-contract-ballotsol-with-2-proposals)
+  - [Casting Votes](#casting-votes)
+    - [Script](#script)
+    - [Script failing when array index given more than the length of proposal array](#script-failing-when-array-index-given-more-than-the-length-of-proposal-array)
+    - [Script successfully executing voting for a proposal](#script-successfully-executing-voting-for-a-proposal)
+  - [Giving Voting Rights](#giving-voting-rights)
+    - [Script](#script-1)
+    - [Script successfully giving rights to vote to a new voter](#script-successfully-giving-rights-to-vote-to-a-new-voter)
+    - [Trying to give the same voter voting right again throws error](#trying-to-give-the-same-voter-voting-right-again-throws-error)
+  - [Delegate](#delegate)
+    - [Script](#script-2)
+    - [Script failing when a user who has already voted tries to delegate](#script-failing-when-a-user-who-has-already-voted-tries-to-delegate)
+  - [Winner Proposal](#winner-proposal)
+    - [Script](#script-3)
+    - [Script failing with wrong contract address](#script-failing-with-wrong-contract-address)
+    - [Script successfully executing and providing winning proposal name](#script-successfully-executing-and-providing-winning-proposal-name)
 
-**Date of Submission:** 9-Aug-2024
+## Assignment Tasks - Week 2 - Group No. 5
+This is a group activity for at least 3 students:
+- Develop and run scripts for “Ballot.sol” within your group to give voting rights, casting votes, delegating votes, and querying results.
+- Write a report with each function execution and the transaction hash, if successful, or the revert reason, if failed.
+- Submit your weekend project by filling out the form provided in Discord.
+- Submit your code in a GitHub repository in the form.
 
-### Project Overview
-This is a group activity for at least 3 students. The objective is to interact with the `HelloWorld.sol` smart contract to change message strings and change owners. The steps involve writing a report with each function execution and including the transaction hash if successful or the revert reason if failed.
+## Date of Submission
+18-Aug-2024
 
-### Steps
+## GitHub Link
+[https://github.com/evmbootcamp/week2project](https://github.com/evmbootcamp/week2project)
 
-1. **Compiled the smart contract and deployed it**
+## Tasks
 
-2. **Constructor called on HelloWorld.sol deployment:**
-   - The constructor initializes the state variable `text` to “Hello World” and assigns the `owner` variable to the deployer.
-   ![Project Screenshot](./images/1.png)
+### Successfully Deploying the Contract Ballot.sol with 2 Proposals
+![Project Screenshot](./utilities/1.png)
 
-3. **Calling `HelloWorld.initialText()`**
-   ![Project Screenshot](./images/2.png)
+- **Contract URL on Etherscan**:  
+  [https://sepolia.etherscan.io/address/0x94245ac9f6e39373d3b3698753d47903bb1e0240#code](https://sepolia.etherscan.io/address/0x94245ac9f6e39373d3b3698753d47903bb1e0240#code)
 
-4. **Calling `HelloWorld.setText()` function:**
-   - Checking if the text was changed using the `helloWorld()`.
-   ![Project Screenshot](./images/3.png)
-   ![Project Screenshot](./images/4.png)
+### Casting Votes
 
-5. **Calling `transferOwnership()`**
-   - Contract ownership transferred to a new address. Verified by checking the `owner` public variable.
-   ![Project Screenshot](./images/5.png)
+#### Script
+`CastVote.ts`
 
-6. **Adding `onlyOwner` modifier to `setText()` function**
-   ![Project Screenshot](./images/6.png)
+#### Script failing when array index given more than the length of proposal array
+[Etherscan Link](https://sepolia.etherscan.io/address/0x94245ac9f6e39373d3b3698753d47903bb1e0240#code)
+![Project Screenshot](./utilities/2.png)
 
-7. **Add `onlyOwner` modifier to `setText()` function and test behavior:**
-   - Called `setText()` function as the owner/deployer and changed text - **WORKED**
-   - Checked if the text changed using `helloWorld()` function - **WORKED**
-   - Changed ownership using `transferOwnership()` function - **WORKED**
-   - Checked if the ownership changed using `owner` state variable - **WORKED**
-   - Called `setText()` function and tried to change the text - **ERROR!** (Ownership was transferred to a different address)
-   ![Project Screenshot](./images/7.png)
+#### Script successfully executing voting for a proposal
+![Project Screenshot](./utilities/3.png)
 
-### Smart Contract Code (HelloWorld.sol)
+### Giving Voting Rights
 
-```solidity
-// SPDX-License-Identifier: GPL-3.0
+#### Script
+`GiveRightToVote.ts`
 
-pragma solidity >=0.8.2 <0.9.0;
+#### Script successfully giving rights to vote to a new voter
+![Project Screenshot](./utilities/4.png)
 
-/// @title EVM Bootcamp August 2024 Group-5 Week-1 Group Project
+#### Trying to give the same voter voting right again throws error
+![Project Screenshot](./utilities/5.png)
 
-contract HelloWorld {
+### Delegate
 
-    /// @dev text is a private state variable to store any text
-    string private text;
+#### Script
+`DelegateTo.ts`
 
-    /// @dev owner represents the owner of this Smart Contract
-    address public owner;
+#### Script failing when a user who has already voted tries to delegate
+![Project Screenshot](./utilities/6.png)
 
-    /// @dev onlyOwner modifier checks if the caller of the function
-    /// is the owner/deployer of the Smart Contract
-    /// @dev if not, then it raises an error with text "Caller is not the owner"
-    modifier onlyOwner() {
-        require(msg.sender == owner, "Caller is not the owner");
-        _;
-    }
+#### Script successfully executing and delegating to the provided voter
+Transaction Hash: `0xb6b8c3321eeb0e909c0a1390b346b257c10030e3ccae64bc76aaf8d937193fbf`
+![Project Screenshot](./utilities/7.png)
 
-    /// @dev the address of the creator/deployer of this Smart Contract
-    /// @dev also initializes the text variable
-    constructor() {
-        text = initialText();
-        owner = msg.sender;
-    }
+### Winner Proposal
 
-    /// @dev initialText() returns a string, "Hello World"
-    function initialText() public pure virtual returns (string memory) {
-        return "Hello World";
-    }
+#### Script
+`Winner.ts`
 
-    /// @dev helloWorld() function returns the state variable, 'text'
-    function helloWorld() public view returns (string memory) {
-        return text;
-    }
+#### Script failing with wrong contract address
+![Project Screenshot](./utilities/8.png)
 
-    /// @dev only the deployer of the contract can change the state variable, 'text'
-    /// @dev setText() function sets the state variable, 'text'
-    function setText(string calldata newText) public {
-        require(msg.sender == owner);
-        text = newText;
-    }
+#### Script successfully executing and providing winning proposal name
+![Project Screenshot](./utilities/9.png)
 
-    /// @dev this function changes the owner of the Smart Contract
-    function transferOwnership(address newOwner) public onlyOwner {
-        owner = newOwner;
-    }
-}
-```
+---
 
-### Report Summary
+### Additional Instructions
 
-- **Compiled and deployed** the smart contract.
-- **Constructor** was called, initializing `text` to "Hello World" and setting `owner` to the deployer.
-- Successfully **called** `initialText()` and `setText()` functions.
-- **Verified** text changes and ownership transfers.
-- **Tested `onlyOwner` modifier** behavior, confirming that only the owner can change the `text`.
+- **Group Activity**: This project was conducted by Group No. 5, consisting of at least three students.
+
+- **Objectives**:
+  1. Develop and run scripts for `Ballot.sol` to give voting rights, cast votes, delegate votes, and query results.
+  2. Write a report detailing each function execution and the transaction hash if successful, or the revert reason if failed.
+  3. Submit the project using the form provided on Discord.
+  4. Submit the code in the GitHub repository linked above.
